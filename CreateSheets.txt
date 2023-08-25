@@ -1,0 +1,62 @@
+Sub CreateSheets()
+    Dim ws As Worksheet
+    Dim new_ws As Worksheet
+    Dim last_row As Long
+    Dim sheet_name As String
+    Dim bj_value As Variant
+    Dim a_value As Variant
+    Dim g_value As Variant
+    Dim i_value As Variant
+    Dim n_value As Variant
+    Dim s_value As Variant
+    Dim x_value As Variant
+    Dim ac_value As Variant
+    Dim at_value As Variant
+    Dim sheet_exists As Boolean
+    
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.Name = "Sheet1" Then
+            last_row = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+            For i = 2 To last_row
+                sheet_name = ws.Cells(i, "A").Value
+                bj_value = ws.Cells(i, "BJ").Value
+                a_value = ws.Cells(i, "A").Value
+                g_value = ws.Cells(i, "G").Value
+                i_value = ws.Cells(i, "I").Value
+                n_value = ws.Cells(i, "N").Value
+                s_value = ws.Cells(i, "S").Value
+                x_value = ws.Cells(i, "X").Value
+                ac_value = ws.Cells(i, "AC").Value
+                at_value = ws.Cells(i, "AT").Value
+                sheet_exists = False
+                
+                'Check if sheet already exists
+                For Each new_ws In ThisWorkbook.Worksheets
+                    If new_ws.Name = sheet_name Then
+                        sheet_exists = True
+                        Exit For
+                    End If
+                Next new_ws
+                
+                'Create new sheet if it doesn't exist
+                If Not sheet_exists Then
+                    Set new_ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count))
+                    new_ws.Name = sheet_name
+                    new_ws.Cells(1, "A").Value = "試験番号：" + a_value
+                    new_ws.Cells(2, "A").Value = "種別：" + g_value
+                    new_ws.Cells(3, "A").Value = "テスト目的：" + i_value
+                    new_ws.Cells(4, "A").Value = "大項目：" + n_value
+                    new_ws.Cells(5, "A").Value = "中項目：" + s_value
+                    new_ws.Cells(6, "A").Value = "小項目：" + x_value
+                    new_ws.Cells(7, "A").Value = "確認項目：" + ac_value
+                    new_ws.Cells(8, "A").Value = "テスト条件：" + at_value
+                    new_ws.Cells(9, "A").Value = "確認内容：" + bj_value
+                    
+                End If
+                
+            Next i
+        End If
+    Next ws
+    
+End Sub
+
